@@ -1,5 +1,3 @@
-# Ignore everything in the root by default except web/ and worker/
-
 # Dependencies & Build artifacts
 node_modules/
 dist/
@@ -9,6 +7,8 @@ dist/
 # Environment Secrets & Sensitive Credentials (CRITICAL)
 .env
 *.env
+.dev.vars
+*.dev.vars
 service.json
 *.key
 
@@ -16,15 +16,15 @@ service.json
 session_data/
 .wwebjs_cache/
 
-# Legacy root files
-index.js
-Bot_MU.bat
-run-hidden.vbs
-jadwal_config.txt
-sistem/
-UI_CLONE_GUIDE.md
-graphify-out/
-.graphifyignore
+# Legacy root files (Only root index.js)
+/index.js
+/Bot_MU.bat
+/run-hidden.vbs
+/jadwal_config.txt
+/sistem/
+/UI_CLONE_GUIDE.md
+/graphify-out/
+/.graphifyignore
 
 # OS & IDE
 .DS_Store
