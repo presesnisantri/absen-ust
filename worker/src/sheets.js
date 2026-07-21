@@ -13,7 +13,11 @@ async function getAccessToken(env) {
 
   // Parse private key
   const alg = "RS256";
-  const formattedKey = privateKey.replace(/\\n/g, "\n");
+  let formattedKey = String(privateKey || "").trim();
+  if ((formattedKey.startsWith('"') && formattedKey.endsWith('"')) || (formattedKey.startsWith("'") && formattedKey.endsWith("'"))) {
+    formattedKey = formattedKey.slice(1, -1);
+  }
+  formattedKey = formattedKey.replace(/\\n/g, "\n").replace(/\r/g, "").trim();
   
   const key = await importPKCS8(formattedKey, alg);
 
