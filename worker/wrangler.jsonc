@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "absen-worker",
+	"name": "absen-ust",
 	"main": "src/index.js",
 	"compatibility_date": "2026-06-28",
 	"observability": {
