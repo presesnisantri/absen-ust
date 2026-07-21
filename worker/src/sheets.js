@@ -4,8 +4,13 @@ import { SignJWT, importPKCS8 } from "jose";
  * Mendapatkan Access Token dari Google API menggunakan Service Account
  */
 async function getAccessToken(env) {
-  const privateKey = env.GOOGLE_PRIVATE_KEY;
-  const clientEmail = env.GOOGLE_CLIENT_EMAIL;
+  let privateKey = String(env.GOOGLE_PRIVATE_KEY || "").trim();
+  let clientEmail = String(env.GOOGLE_CLIENT_EMAIL || "").trim();
+
+  if ((clientEmail.startsWith('"') && clientEmail.endsWith('"')) || (clientEmail.startsWith("'") && clientEmail.endsWith("'"))) {
+    clientEmail = clientEmail.slice(1, -1);
+  }
+  clientEmail = clientEmail.trim();
 
   if (!privateKey || !clientEmail) {
     throw new Error("Missing Google Service Account credentials in environment.");
@@ -13,7 +18,7 @@ async function getAccessToken(env) {
 
   // Parse private key
   const alg = "RS256";
-  let formattedKey = String(privateKey || "").trim();
+  let formattedKey = privateKey;
   if ((formattedKey.startsWith('"') && formattedKey.endsWith('"')) || (formattedKey.startsWith("'") && formattedKey.endsWith("'"))) {
     formattedKey = formattedKey.slice(1, -1);
   }
@@ -60,7 +65,11 @@ async function getAccessToken(env) {
 export class GoogleSheetsHelper {
   constructor(env) {
     this.env = env;
-    this.sheetId = env.GOOGLE_SHEET_ID;
+    let sheetId = String(env.GOOGLE_SHEET_ID || "").trim();
+    if ((sheetId.startsWith('"') && sheetId.endsWith('"')) || (sheetId.startsWith("'") && sheetId.endsWith("'"))) {
+      sheetId = sheetId.slice(1, -1);
+    }
+    this.sheetId = sheetId.trim();
   }
 
   async getHeaders() {
